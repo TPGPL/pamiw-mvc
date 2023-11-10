@@ -12,13 +12,4 @@ public class PamiwMvcApplication {
     public static void main(String[] args) {
         SpringApplication.run(PamiwMvcApplication.class, args);
     }
-
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        var engine = new SpringTemplateEngine();
-
-        engine.addDialect(new LayoutDialect());
-
-        return engine;
-    }
 }
