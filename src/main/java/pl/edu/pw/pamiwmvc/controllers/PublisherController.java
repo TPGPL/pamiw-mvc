@@ -3,10 +3,8 @@ package pl.edu.pw.pamiwmvc.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import pl.edu.pw.pamiwmvc.services.AuthorService;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.pw.pamiwmvc.dtos.PublisherDto;
 import pl.edu.pw.pamiwmvc.services.PublisherService;
 
 @Controller
@@ -29,6 +27,20 @@ public class PublisherController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id) {
         service.delete(id);
+
+        return "redirect:/publishers";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("pub", new PublisherDto());
+
+        return "publishers/create";
+    }
+
+    @PostMapping("/create")
+    public String save(@ModelAttribute PublisherDto dto) {
+        service.create(dto);
 
         return "redirect:/publishers";
     }
