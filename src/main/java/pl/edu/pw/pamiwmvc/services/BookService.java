@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import pl.edu.pw.pamiwmvc.dtos.BookDto;
-import pl.edu.pw.pamiwmvc.dtos.Endpoints;
 import pl.edu.pw.pamiwmvc.dtos.ServiceResponse;
-import pl.edu.pw.pamiwmvc.utils.ConfigHandler;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -18,18 +16,18 @@ import java.util.List;
 public class BookService {
     private final HttpClient client;
     private final ObjectMapper mapper;
-    private final String BASE_URL = "http://localhost:8080/api";
-    private final Endpoints endpoints;
+    private final String BASE_URL = "http://localhost:8081/api";
+    private final String MULTI = "/books";
+    private final String SINGLE = "/books/%d";
 
     public BookService() {
         this.client = HttpClient.newHttpClient();
-        this.endpoints = ConfigHandler.getConfig();
         this.mapper = new ObjectMapper();
     }
 
     public List<BookDto> getAll() {
         try {
-            var uri = BASE_URL + endpoints.getBook().getMulti();
+            var uri = BASE_URL + MULTI;
             var request = HttpRequest.newBuilder(new URI(uri)).GET().build();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -45,7 +43,7 @@ public class BookService {
 
     public void create(BookDto dto) {
         try {
-            var uri = BASE_URL + endpoints.getBook().getMulti();
+            var uri = BASE_URL + MULTI;
             var data = mapper.writeValueAsString(dto);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .header("Content-Type", "application/json")
@@ -72,7 +70,7 @@ public class BookService {
 
     public void update(int id, BookDto dto) {
         try {
-            var uri = BASE_URL + String.format(endpoints.getBook().getSingle(), id);
+            var uri = BASE_URL + String.format(SINGLE, id);
             var data = mapper.writeValueAsString(dto);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .header("Content-Type", "application/json")
@@ -99,7 +97,7 @@ public class BookService {
 
     public void delete(int id) {
         try {
-            var uri = BASE_URL + String.format(endpoints.getBook().getSingle(), id);
+            var uri = BASE_URL + String.format(SINGLE, id);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .DELETE()
                     .build();
