@@ -41,6 +41,22 @@ public class PublisherService {
         }
     }
 
+    public PublisherDto get(int id) {
+        try {
+            var uri = BASE_URL + String.format(SINGLE, id);
+            var request = HttpRequest.newBuilder(new URI(uri)).GET().build();
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.body() == null) return null;
+
+            return mapper.readValue(response.body(), new TypeReference<ServiceResponse<PublisherDto>>() {
+            }).getData();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public void create(PublisherDto dto) {
         try {
             var uri = BASE_URL + MULTI;
