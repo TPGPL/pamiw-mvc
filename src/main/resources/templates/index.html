@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MVC App</title>
+    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
-<div th:include="layout/header :: header"></div>
-<div class="content">hej</div>
-<div th:include="layout/footer :: footer"></div>
+<div class="wrapper">
+    <div th:insert="~{layout/header :: header}"></div>
+    <div class="content">Home page of the MVC app</div>
+</div>
 </body>
 </html>
