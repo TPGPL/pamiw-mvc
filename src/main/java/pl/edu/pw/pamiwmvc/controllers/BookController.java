@@ -44,4 +44,21 @@ public class BookController {
 
         return "redirect:/books";
     }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable int id, Model model) {
+        var book = service.get(id);
+
+        model.addAttribute("updateId", id);
+        model.addAttribute("book", book);
+
+        return "books/update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveWithUpdate(@PathVariable int id, @ModelAttribute BookDto dto) {
+        service.update(id, dto);
+
+        return "redirect:/books";
+    }
 }

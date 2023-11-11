@@ -44,4 +44,21 @@ public class PublisherController {
 
         return "redirect:/publishers";
     }
+
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable int id, Model model) {
+        var publisher = service.get(id);
+
+        model.addAttribute("updateId", id);
+        model.addAttribute("pub", publisher);
+
+        return "publishers/update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveWithUpdate(@PathVariable int id, @ModelAttribute PublisherDto dto) {
+        service.update(id, dto);
+
+        return "redirect:/publishers";
+    }
 }

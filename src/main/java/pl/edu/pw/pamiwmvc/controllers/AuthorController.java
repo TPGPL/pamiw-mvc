@@ -45,4 +45,20 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable int id, Model model) {
+        var author = service.get(id);
+
+        model.addAttribute("updateId", id);
+        model.addAttribute("author", author);
+
+        return "authors/update";
+    }
+
+    @PostMapping("/update/{id}")
+    public String saveWithUpdate(@PathVariable int id, @ModelAttribute AuthorDto dto) {
+        service.update(id, dto);
+
+        return "redirect:/authors";
+    }
 }
