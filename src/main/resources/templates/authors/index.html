@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div th:insert="~{layout/header :: header}"></div>
-    <div class="content">
+    <div class="content" th:if="${authors != null}">
         <div class="d-grid gap-2">
             <a th:href="@{/authors/create}" class="btn btn-primary">Create new author</a>
         </div>
@@ -36,6 +36,9 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="no-content" th:if="${authors == null}">
+        No data available.
     </div>
 </div>
 </body>

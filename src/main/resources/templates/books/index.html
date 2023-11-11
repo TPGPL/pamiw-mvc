@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div th:insert="~{layout/header :: header}"></div>
-    <div class="content">
+    <div class="content" th:if="${books != null}">
         <div class="d-grid gap-2">
             <a th:href="@{/books/create}" class="btn btn-primary">Create new book</a>
         </div>
@@ -42,6 +42,9 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="no-content" th:if="${books == null}">
+        No data available.
     </div>
 </div>
 </body>
