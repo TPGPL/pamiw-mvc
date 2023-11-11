@@ -11,7 +11,7 @@
     <div th:insert="~{layout/header :: header}"></div>
     <div class="content" th:if="${book != null}">
         <h2>Update book</h2>
-        <form action="#" th:action="@{/books/update/{id}(id=updateId)}" th:object="${book}" method="post">
+        <form action="#" th:action="@{/books/update/{id}(id=${updateId})}" th:object="${book}" method="post">
             <input type="hidden" th:field="*{id}" />
             <div>
                 <label class="form-label" for="bookTitle">Title</label>
