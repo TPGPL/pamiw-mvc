@@ -16,14 +16,14 @@
         <table class="table table-striped table-hover align-middle table-responsive">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="pub: ${publishers}">
-                <td th:text="${pub.id}"></td>
+                <th scope="row" th:text="${pub.id}"></th>
                 <td th:text="${pub.name}"></td>
                 <td>
                     <a th:href="@{/publishers/update/{id}(id=${pub.id})}" class="btn btn-primary">Update</a>

@@ -16,19 +16,19 @@
         <table class="table table-striped table-hover align-middle table-responsive">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Author ID</th>
-                <th>Publisher ID</th>
-                <th>Page count</th>
-                <th>Release date</th>
-                <th>ISBN</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author ID</th>
+                <th scope="col">Publisher ID</th>
+                <th scope="col">Page count</th>
+                <th scope="col">Release date</th>
+                <th scope="col">ISBN</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="book: ${books}">
-                <td th:text="${book.id}"></td>
+                <th scope="row" th:text="${book.id}"></th>
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.authorId}"></td>
                 <td th:text="${book.publisherId}"></td>
