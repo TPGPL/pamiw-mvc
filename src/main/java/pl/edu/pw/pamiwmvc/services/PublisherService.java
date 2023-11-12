@@ -2,7 +2,9 @@ package pl.edu.pw.pamiwmvc.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.pw.pamiwmvc.dtos.APIEndpoints;
 import pl.edu.pw.pamiwmvc.dtos.PublisherDto;
 import pl.edu.pw.pamiwmvc.dtos.ServiceResponse;
 
@@ -16,18 +18,18 @@ import java.util.List;
 public class PublisherService {
     private final HttpClient client;
     private final ObjectMapper mapper;
-    private final String BASE_URL = "http://localhost:8081/api";
-    private final String MULTI = "/publishers";
-    private final String SINGLE = "/publishers/%d";
+    private final APIEndpoints endpoints;
 
-    public PublisherService() {
+    @Autowired
+    public PublisherService(APIEndpoints endpoints) {
         this.client = HttpClient.newHttpClient();
         this.mapper = new ObjectMapper();
+        this.endpoints = endpoints;
     }
 
     public List<PublisherDto> getAll() {
         try {
-            var uri = BASE_URL + MULTI;
+            var uri = endpoints.getBaseUrl() + endpoints.getPublishers().getMulti();
             var request = HttpRequest.newBuilder(new URI(uri)).GET().build();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -43,7 +45,7 @@ public class PublisherService {
 
     public PublisherDto get(int id) {
         try {
-            var uri = BASE_URL + String.format(SINGLE, id);
+            var uri = endpoints.getBaseUrl() + String.format(endpoints.getPublishers().getSingle(), id);
             var request = HttpRequest.newBuilder(new URI(uri)).GET().build();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -59,7 +61,7 @@ public class PublisherService {
 
     public void create(PublisherDto dto) {
         try {
-            var uri = BASE_URL + MULTI;
+            var uri = endpoints.getBaseUrl() + endpoints.getPublishers().getMulti();
             var data = mapper.writeValueAsString(dto);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .header("Content-Type", "application/json")
@@ -86,7 +88,7 @@ public class PublisherService {
 
     public void update(int id, PublisherDto dto) {
         try {
-            var uri = BASE_URL + String.format(SINGLE, id);
+            var uri = endpoints.getBaseUrl() + String.format(endpoints.getPublishers().getSingle(), id);
             var data = mapper.writeValueAsString(dto);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .header("Content-Type", "application/json")
@@ -113,7 +115,7 @@ public class PublisherService {
 
     public void delete(int id) {
         try {
-            var uri = BASE_URL + String.format(SINGLE, id);
+            var uri = endpoints.getBaseUrl() + String.format(endpoints.getPublishers().getSingle(), id);
             var request = HttpRequest.newBuilder(new URI(uri))
                     .DELETE()
                     .build();
